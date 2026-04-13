@@ -3,8 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import InventoryForm from "../components/inventory/InventoryForm";
 import {
   getInventoryById,
-  updateInventory,
-  updateInventoryPhoto,
+  updateInventory
 } from "../services/inventoryApi";
 
 export default function AdminInventoryEdit() {
@@ -14,21 +13,14 @@ export default function AdminInventoryEdit() {
 
   useEffect(() => {
     getInventoryById(id).then(setItem);
-  }, []);
+  }, [id]);
 
-  const handleSubmit = async (formData, jsonData) => {
-    await updateInventory(id, jsonData);
+  const handleSubmit = async (data) => {
+  await updateInventory(id, data);
+  navigate("/");
+};
 
-    if (formData.get("photo")) {
-      const fd = new FormData();
-      fd.append("photo", formData.get("photo"));
-      await updateInventoryPhoto(id, fd);
-    }
-
-    navigate("/");
-  };
-
-  if (!item) return <p>Loading</p>;
+  if (!item) return <p>Loading...</p>;
 
   return <InventoryForm initialData={item} onSubmit={handleSubmit} />;
 }

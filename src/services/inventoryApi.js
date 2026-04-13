@@ -11,20 +11,28 @@ export const getInventoryById = async (id) => {
   return res.json();
 };
 
-export const createInventory = async (formData) => {
-  const res = await fetch(`${BASE_URL}/register`, {
+export const createInventory = async (data) => {
+  const res = await fetch("http://localhost:3000/inventory", {
     method: "POST",
-    body: formData,
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
   });
+
   return res.json();
 };
 
 export const updateInventory = async (id, data) => {
-  await fetch(`${BASE_URL}/inventory/${id}`, {
+  const res = await fetch(`http://localhost:3000/inventory/${id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
   });
+
+  return res.json();
 };
 
 export const updateInventoryPhoto = async (id, formData) => {

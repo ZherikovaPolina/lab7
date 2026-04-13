@@ -1,42 +1,56 @@
 import { useState } from "react";
 
 export default function InventoryForm({ onSubmit, initialData = {} }) {
-  const [name, setName] = useState(initialData.inventory_name || "");
+  const [inventory_name, setName] = useState(initialData.inventory_name || "");
   const [description, setDescription] = useState(initialData.description || "");
-  const [photo, setPhoto] = useState(null);
-  const [error, setError] = useState("");
+  const [photo, setPhoto] = useState(initialData.photo || "");
+  const [preview, setPreview] = useState(initialData.photo || "");
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPhoto(reader.result);
+      setPreview(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!name) {
-      setError("Назва обов'язкова");
+    if (!inventory_name.trim()) {
+      alert("Введи назву");
       return;
     }
 
-    const formData = new FormData();
-    formData.append("inventory_name", name);
-    formData.append("description", description);
-    if (photo) formData.append("photo", photo);
+    onSubmit({
+      inventory_name,
+      description,
+      photo,
+    });
 
-    onSubmit(formData, { inventory_name: name, description });
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <input
         placeholder="Назва"
-        value={name}
+        value={inventory_name}
         onChange={(e) => setName(e.target.value)}
       />
-      <textarea
+
+      <input
         placeholder="Опис"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-      <input type="file" onChange={(e) => setPhoto(e.target.files[0])} />
 
-      {error && <p>{error}</p>}
+      <input type="file" onChange={handleFileChange} />
+
+      {preview && <img src={preview} width="150" />}
 
       <button type="submit">Зберегти</button>
     </form>

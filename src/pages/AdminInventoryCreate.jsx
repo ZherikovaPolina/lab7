@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 export default function AdminInventoryCreate() {
   const navigate = useNavigate();
 
-  const handleSubmit = async (formData) => {
-    await createInventory(formData);
-    navigate("/");
-  };
+  const handleSubmit = async (data) => {
+  await createInventory(data);
+  navigate("/");
+};
 
   return (
     <div>
