@@ -28,7 +28,7 @@ export default function AdminInventoryDetails() {
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
+    <div className="container">
       <h1>Деталі інвентарю</h1>
 
       <InventoryDetails item={item} />

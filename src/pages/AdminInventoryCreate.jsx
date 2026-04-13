@@ -11,7 +11,7 @@ export default function AdminInventoryCreate() {
 };
 
   return (
-    <div>
+    <div className="container">
       <h1>Створення</h1>
       <InventoryForm onSubmit={handleSubmit} />
     </div>

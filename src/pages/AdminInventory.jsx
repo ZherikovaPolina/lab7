@@ -36,9 +36,9 @@ export default function AdminInventory() {
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
+    <div className="container">
       <h1>Інвентар</h1>
-      <Link to="/create">+ Додати</Link>
+      <Link to="/create" className="add-button">+ Додати</Link>
 
       <InventoryTable items={items} onDelete={setDeleteId} />
 
