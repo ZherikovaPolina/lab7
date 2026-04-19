@@ -40,6 +40,10 @@ export default function AdminInventory() {
       <h1>Інвентар</h1>
       <Link to="/create" className="add-button">+ Додати</Link>
 
+      <Link to="/gallery">
+        <button>Перейти в галерею</button>
+      </Link>
+
       <InventoryTable items={items} onDelete={setDeleteId} />
 
       {deleteId && (
