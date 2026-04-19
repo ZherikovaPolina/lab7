@@ -6,7 +6,7 @@ export default function FavoritesBar() {
 
   return (
     <div className="favorites-bar">
-      <Link to="/favorites">
+      <Link to="/favorites" className="add-button">
         ❤️ Улюблені ({favorites.length})
       </Link>
     </div>
