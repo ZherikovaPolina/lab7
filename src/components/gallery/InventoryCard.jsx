@@ -1,7 +1,13 @@
-export default function InventoryCard({ item, onClick, toggleFavorite, isFavorite }) {
+export default function InventoryCard({
+  item,
+  onClick,
+  toggleFavorite,
+  isFavorite,
+}) {
   return (
     <div className="card" onClick={() => onClick(item)}>
-      <img src={item.photo} alt="" />
+      <img src={item.photo} alt={item.inventory_name} />
+
       <h3>{item.inventory_name}</h3>
 
       <button
