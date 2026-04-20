@@ -3,41 +3,41 @@ import { getInventory } from "../services/inventoryApi";
 import InventoryGallery from "../components/gallery/InventoryGallery";
 import InventoryQuickView from "../components/gallery/InventoryQuickView";
 import FavoritesBar from "../components/gallery/FavoritesBar";
-import useFavorites from "../hooks/useFavorites";
 
 export default function Gallery() {
   const [items, setItems] = useState([]);
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  const { toggleFavorite, isFavorite } = useFavorites();
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    getInventory().then((data) => {
-      setItems(data);
-      setLoading(false);
-    });
+    const fetchData = async () => {
+      try {
+        const data = await getInventory();
+        setItems(data);
+      } catch {
+        setError("Помилка завантаження");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   if (loading) return <p>Loading...</p>;
+
+  if (error) return <p>{error}</p>;
+
+  if (items.length === 0) return <p>Немає даних</p>;
 
   return (
     <div className="container">
       <FavoritesBar />
 
-      <h1>Галерея</h1>
+      <InventoryGallery items={items} onClick={setSelected} />
 
-      <InventoryGallery
-        items={items}
-        onClick={setSelected}
-        toggleFavorite={toggleFavorite}
-        isFavorite={isFavorite}
-      />
-
-      <InventoryQuickView
-        item={selected}
-        onClose={() => setSelected(null)}
-      />
+      <InventoryQuickView item={selected} onClose={() => setSelected(null)} />
     </div>
   );
 }
